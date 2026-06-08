@@ -1,6 +1,6 @@
 # JGD Forms Layout for Lazarus IDE
 
-A powerful grid-based layout manager component for Lazarus IDE, inspired by the JGoodies Forms Layout library from the Java world. Build responsive, professional desktop forms with declarative grid specifications and automatic sizing.
+A powerful grid-based layout manager component for Lazarus IDE, inspired by the JGoodies Forms Layout library from the Java world. Build responsive, professional desktop forms with declarative grid specifications.
 
 **Language:** Pascal (Free Pascal Compiler)  
 **License:** MIT  
@@ -24,6 +24,7 @@ A powerful grid-based layout manager component for Lazarus IDE, inspired by the 
   - [Login Form](#login-form)
   - [Employee Form](#employee-form)
   - [Address Form](#address-form)
+  - [Credit Card Form](#credit-card-form)
 - [Unit Tests](#unit-tests)
 - [Key Classes & Types](#key-classes--types)
 - [Design Principles](#design-principles)
@@ -33,7 +34,7 @@ A powerful grid-based layout manager component for Lazarus IDE, inspired by the 
 
 ## Overview
 
-The **JGD Forms Layout** component brings the elegance and power of the JGoodies Forms Layout pattern to Lazarus and Free Pascal development. Instead of struggling with anchors, margins, and manual pixel calculations, you declare your form layout using a simple, string-based specification language.
+The **JGD Forms Layout** component brings the elegance and power of the JGoodies Forms Layout pattern to Lazarus and Free Pascal development. Instead of struggling with anchors, margins, and manual calculations, simply declare your grid layout as a string specification.
 
 This layout engine handles:
 - **Grid-based positioning** of controls
@@ -256,7 +257,7 @@ end;
 
 ## Examples
 
-This repository includes four comprehensive example applications demonstrating different layout scenarios.
+This repository includes five comprehensive example applications demonstrating different layout scenarios.
 
 ### Simple Application
 
@@ -348,6 +349,12 @@ lazbuild EmployeeApp.lpi
 
 A detailed address entry form showcasing multi-control rows and section grouping.
 
+**Key Features:**
+- Multi-line address fields with proper alignment
+- Complex grid layout with various column spans
+- Demonstrates responsive field sizing
+- Section-based organization with visual separators
+
 **Key Files:**
 - `ex_address/uAddressForm.pas` – Form implementation
 - `ex_address/uAddressForm.lfm` – Extensive layout with address fields
@@ -357,6 +364,32 @@ A detailed address entry form showcasing multi-control rows and section grouping
 cd ex_address
 lazbuild AddressApp.lpi
 ./lib/x86_64-*/AddressApp
+```
+
+---
+
+### Credit Card Form
+
+**Location:** `ex_creditcard/`
+
+A sophisticated payment form demonstrating advanced layout techniques for sensitive data entry.
+
+**Key Features:**
+- Multi-row card details entry (number, expiry, CVV)
+- Aligned input fields with appropriate widths
+- Professional spacing and visual hierarchy
+- Demonstrates mixed column spans for complex layouts
+- Shows best practices for sensitive information presentation
+
+**Key Files:**
+- `ex_creditcard/uCreditCardForm.pas` – Form implementation with validation logic
+- `ex_creditcard/uCreditCardForm.lfm` – Payment form layout design
+
+**To Run:**
+```bash
+cd ex_creditcard
+lazbuild CreditCardApp.lpi
+./lib/x86_64-*/CreditCardApp
 ```
 
 ---
