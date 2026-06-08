@@ -13,12 +13,14 @@ type
     pnlTitleBar: TPanel;
     lblTitle: TLabel;
     lblClose: TLabel;
+    { pnlFields layout: Columns = fill:pref:grow; Rows = pref, 10dlu, pref, 10dlu, pref, 10dlu, pref }
     pnlFields: TJgdFormLayout;
     paintCards: TPaintBox;
     edtName: TEdit;
     pnlCardInput: TPanel;
     paintBrandLogo: TPaintBox;
     edtCardNumber: TEdit;
+    { pnlBottomLayout layout: Columns = pref, fill:0:grow, 60dlu, 8dlu, 40dlu; Rows = pref }
     pnlBottomLayout: TJgdFormLayout;
     btnSubmit: TButton;
     edtExpiry: TEdit;
