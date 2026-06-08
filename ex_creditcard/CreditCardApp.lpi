@@ -60,5 +60,8 @@
         </Win32>
       </Options>
     </Linking>
+    <Other>
+      <CustomOptions Value="@../macos-linker.cfg"/>
+    </Other>
   </CompilerOptions>
 </CONFIG>

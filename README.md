@@ -106,10 +106,33 @@ If the package is already registered in Lazarus, rebuild the IDE with:
 lazbuild --build-ide=-k-ld_classic
 ```
 
-Cocoa example applications may need the same linker option:
+Cocoa example applications in this repository already include the shared
+`@../macos-linker.cfg` response file in their Lazarus project options. That
+file applies the linker workaround only when FPC is targeting macOS:
+
+```text
+#ifdef darwin
+-k-ld_classic
+#endif
+```
+
+That means the examples can be built normally:
 
 ```bash
-lazbuild --opt=-k-ld_classic ex_simple/SimpleApp.lpi
+lazbuild ex_simple/SimpleApp.lpi
+```
+
+When code signing a Lazarus-generated `.app` bundle on macOS, make sure the
+bundle executable under `Contents/MacOS` is a regular file before running
+`codesign`. Lazarus creates that entry as a symlink to the outer executable,
+and Apple's signing tool rejects a symlink as the main bundle executable.
+Replace the symlink with a copy of the built executable, then sign the bundle:
+
+```bash
+rm -f lib/aarch64-darwin/SimpleApp.app/Contents/MacOS/SimpleApp
+cp lib/aarch64-darwin/SimpleApp \
+  lib/aarch64-darwin/SimpleApp.app/Contents/MacOS/SimpleApp
+codesign --force --deep --sign - lib/aarch64-darwin/SimpleApp.app
 ```
 
 In the Lazarus IDE, add `-k-ld_classic` to the selected IDE build profile before
@@ -653,11 +676,20 @@ rejects a Lazarus Cocoa object file such as `cocoawsextctrls.o` and reports
 lazbuild --build-ide=-k-ld_classic
 ```
 
-For example projects or your own Cocoa LCL applications, pass the same option to
-the project build:
+For your own Cocoa LCL applications, either pass the same option to the project
+build:
 
 ```bash
 lazbuild --opt=-k-ld_classic path/to/project.lpi
+```
+
+Or add a small FPC response file to the project and reference it from
+**Project Options > Compiler Options > Custom Options**:
+
+```text
+#ifdef darwin
+-k-ld_classic
+#endif
 ```
 
 ### Issue: Test Suite Compilation Fails
