@@ -52,6 +52,7 @@ type
     function GetCardBrand: string;
     procedure GetCardParts(out ANumber, AExpiry, ACvc: string);
     procedure DrawBrandLogo(ACanvas: TCanvas; ARect: TRect; const ABrand: string; AOnCard: Boolean);
+    function Scale(AVal: Integer): Integer;
   public
   end;
 
@@ -177,6 +178,11 @@ begin
     ACvc := 'XXX';
 end;
 
+function TCreditCardForm.Scale(AVal: Integer): Integer;
+begin
+  Result := (AVal * Self.PixelsPerInch) div 96;
+end;
+
 procedure TCreditCardForm.DrawBrandLogo(ACanvas: TCanvas; ARect: TRect; const ABrand: string; AOnCard: Boolean);
 var
   Radius, CX, CY: Integer;
@@ -188,7 +194,7 @@ begin
   begin
     ACanvas.Font.Name := 'Segoe UI';
     ACanvas.Font.Style := [fsBold, fsItalic];
-    ACanvas.Font.Size := 9;
+    ACanvas.Font.Height := -Scale(12);
     if AOnCard then
       ACanvas.Font.Color := clWhite
     else
@@ -217,13 +223,13 @@ begin
     if AOnCard then
       ACanvas.Brush.Color := TColor($90A0B0);
       
-    ACanvas.RoundRect(ARect.Left + 2, ARect.Top + 2, ARect.Right - 2, ARect.Bottom - 2, 4, 4);
+    ACanvas.RoundRect(ARect.Left + Scale(2), ARect.Top + Scale(2), ARect.Right - Scale(2), ARect.Bottom - Scale(2), Scale(4), Scale(4));
     
     ACanvas.Brush.Color := TColor($B0B0B0);
     if AOnCard then
       ACanvas.Brush.Color := TColor($A8B8C8);
       
-    ACanvas.FillRect(ARect.Left + 6, ARect.Top + 6, ARect.Left + 12, ARect.Top + 10);
+    ACanvas.FillRect(ARect.Left + Scale(6), ARect.Top + Scale(6), ARect.Left + Scale(12), ARect.Top + Scale(10));
   end;
 end;
 
@@ -243,52 +249,52 @@ begin
   LCanvas.Pen.Style := psClear;
   LCanvas.Brush.Style := bsSolid;
 
-  // 1. Draw Back Card
+  // 1. Draw Back Card (scaled dimensions)
   LCanvas.Brush.Color := TColor($D29864);
-  LCanvas.RoundRect(110, 30, 330, 160, 10, 10);
+  LCanvas.RoundRect(Scale(110), Scale(30), Scale(330), Scale(160), Scale(10), Scale(10));
 
   LCanvas.Brush.Color := clBlack;
-  LCanvas.FillRect(110, 45, 330, 68);
+  LCanvas.FillRect(Scale(110), Scale(45), Scale(330), Scale(68));
 
   LCanvas.Brush.Color := clWhite;
-  LCanvas.FillRect(250, 80, 310, 102);
+  LCanvas.FillRect(Scale(250), Scale(80), Scale(310), Scale(102));
 
   LCanvas.Font.Name := 'Segoe UI';
-  LCanvas.Font.Size := 9;
+  LCanvas.Font.Height := -Scale(12);
   LCanvas.Font.Color := clBlack;
   LCanvas.Font.Style := [];
-  LCanvas.TextOut(255, 82, Cvc);
+  LCanvas.TextOut(Scale(255), Scale(82), Cvc);
 
-  LCanvas.Font.Size := 7;
+  LCanvas.Font.Height := -Scale(10);
   LCanvas.Font.Color := clWhite;
-  LCanvas.TextOut(255, 105, 'CVC code');
+  LCanvas.TextOut(Scale(255), Scale(105), 'CVC code');
 
-  // 2. Draw Front Card
+  // 2. Draw Front Card (scaled dimensions)
   LCanvas.Brush.Color := TColor($C57B3B);
-  LCanvas.RoundRect(20, 10, 240, 140, 10, 10);
+  LCanvas.RoundRect(Scale(20), Scale(10), Scale(240), Scale(140), Scale(10), Scale(10));
 
   LCanvas.Font.Name := 'Segoe UI';
-  LCanvas.Font.Size := 9;
+  LCanvas.Font.Height := -Scale(12);
   LCanvas.Font.Color := clWhite;
   LCanvas.Font.Style := [fsBold];
-  LCanvas.TextOut(190, 20, 'BANK');
+  LCanvas.TextOut(Scale(190), Scale(20), 'BANK');
 
   LCanvas.Font.Name := 'Consolas';
-  LCanvas.Font.Size := 11;
+  LCanvas.Font.Height := -Scale(15);
   LCanvas.Font.Color := clWhite;
   LCanvas.Font.Style := [fsBold];
-  LCanvas.TextOut(32, 58, CardNum);
+  LCanvas.TextOut(Scale(32), Scale(58), CardNum);
 
   LCanvas.Font.Name := 'Segoe UI';
-  LCanvas.Font.Size := 9;
+  LCanvas.Font.Height := -Scale(12);
   LCanvas.Font.Color := clWhite;
   LCanvas.Font.Style := [];
-  LCanvas.TextOut(35, 92, UpperCase(edtName.Text));
+  LCanvas.TextOut(Scale(35), Scale(92), UpperCase(edtName.Text));
 
-  LCanvas.Font.Size := 8;
-  LCanvas.TextOut(35, 110, Expiry);
+  LCanvas.Font.Height := -Scale(11);
+  LCanvas.TextOut(Scale(35), Scale(110), Expiry);
 
-  DrawBrandLogo(LCanvas, Rect(190, 95, 225, 118), Brand, True);
+  DrawBrandLogo(LCanvas, Rect(Scale(190), Scale(95), Scale(225), Scale(118)), Brand, True);
 end;
 
 procedure TCreditCardForm.paintBrandLogoPaint(Sender: TObject);

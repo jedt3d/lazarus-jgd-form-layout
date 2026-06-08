@@ -39,6 +39,7 @@ type
     procedure ForgotPasswordClick(Sender: TObject);
     procedure SignUpClick(Sender: TObject);
   private
+    function Scale(AVal: Integer): Integer;
   public
   end;
 
@@ -48,6 +49,11 @@ var
 implementation
 
 {$R *.lfm}
+
+function TLoginForm.Scale(AVal: Integer): Integer;
+begin
+  Result := (AVal * Self.PixelsPerInch) div 96;
+end;
 
 procedure TLoginForm.GoogleLogoPaint(Sender: TObject);
 var
@@ -81,15 +87,15 @@ begin
   
   // Center hole cutout (turns sectors into G-ring)
   LCanvas.Brush.Color := FGoogleContentPanel.Color;
-  LCanvas.Ellipse(R.Left + 4, R.Top + 4, R.Right - 4, R.Bottom - 4);
+  LCanvas.Ellipse(R.Left + Scale(4), R.Top + Scale(4), R.Right - Scale(4), R.Bottom - Scale(4));
   
   // Blue horizontal crossbar
   LCanvas.Brush.Color := $E08B00; // #4285F4
-  LCanvas.FillRect(R.Left + R.Width div 2, R.Top + R.Height div 2 - 2, R.Right, R.Top + R.Height div 2 + 2);
+  LCanvas.FillRect(R.Left + R.Width div 2, R.Top + R.Height div 2 - Scale(2), R.Right, R.Top + R.Height div 2 + Scale(2));
   
   // Cutout sector gap above crossbar
   LCanvas.Brush.Color := FGoogleContentPanel.Color;
-  LCanvas.Pie(R.Left + 3, R.Top + 3, R.Right - 3, R.Bottom - 3, R.Right, R.Top + R.Height div 2 - 2, R.Right, R.Top + 1);
+  LCanvas.Pie(R.Left + Scale(3), R.Top + Scale(3), R.Right - Scale(3), R.Bottom - Scale(3), R.Right, R.Top + R.Height div 2 - Scale(2), R.Right, R.Top + Scale(1));
 end;
 
 procedure TLoginForm.BtnSignInClick(Sender: TObject);

@@ -9,7 +9,8 @@
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
       <XPManifest>
-        <DpiAware Value="True"/>
+        <DpiAware Value="True/PM_V2"/>
+        <UseLCLscaling Value="True"/>
       </XPManifest>
     </General>
     <BuildModes>
