@@ -1,0 +1,284 @@
+object AddressForm: TAddressForm
+  Left = 350
+  Height = 360
+  Top = 200
+  Width = 550
+  BorderStyle = bsNone
+  Caption = 'New Address'
+  ClientHeight = 360
+  ClientWidth = 550
+  Color = 16119285
+  OnCreate = FormCreate
+  OnPaint = FormPaint
+  Position = poScreenCenter
+  object pnlTitleBar: TPanel
+    Left = 0
+    Height = 55
+    Top = 0
+    Width = 550
+    Align = alTop
+    BevelOuter = bvNone
+    Color = 16119285
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+    OnMouseDown = pnlTitleBarMouseDown
+    OnMouseMove = pnlTitleBarMouseMove
+    OnMouseUp = pnlTitleBarMouseUp
+    object lblTitle: TLabel
+      Left = 20
+      Height = 25
+      Top = 15
+      Width = 120
+      Caption = 'New Address'
+      Font.Color = 3355443
+      Font.Name = 'Segoe UI'
+      Font.Size = 14
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      OnMouseDown = pnlTitleBarMouseDown
+      OnMouseMove = pnlTitleBarMouseMove
+      OnMouseUp = pnlTitleBarMouseUp
+    end
+    object lblClose: TLabel
+      Left = 510
+      Height = 25
+      Top = 15
+      Width = 20
+      Anchors = [akTop, akRight]
+      Caption = '✕'
+      Cursor = crHandPoint
+      Font.Color = 3355443
+      Font.Name = 'Segoe UI'
+      Font.Size = 14
+      ParentColor = False
+      ParentFont = False
+      OnClick = lblCloseClick
+      OnMouseEnter = lblCloseMouseEnter
+      OnMouseLeave = lblCloseMouseLeave
+    end
+  end
+  object pnlFields: TJgdFormLayout
+    Left = 0
+    Height = 305
+    Top = 55
+    Width = 550
+    Align = alClient
+    BorderWidth = 20
+    Color = 16119285
+    ParentColor = False
+    ColumnSpecs = 'fill:pref:grow'
+    RowSpecs = 'pref, 10dlu, pref, 10dlu, pref, 10dlu, pref, 14dlu, pref'
+    ControlConstraints = <    
+      item
+        Control = pnlCountryDropdown
+        Column = 1
+        Row = 1
+        ColumnSpan = 1
+        HAlign = jgdDefault
+        VAlign = jgdDefault
+      end    
+      item
+        Control = edtAddress1
+        Column = 1
+        Row = 3
+        ColumnSpan = 1
+        HAlign = jgdDefault
+        VAlign = jgdDefault
+      end    
+      item
+        Control = edtAddress2
+        Column = 1
+        Row = 5
+        ColumnSpan = 1
+        HAlign = jgdDefault
+        VAlign = jgdDefault
+      end    
+      item
+        Control = pnlCityStateZip
+        Column = 1
+        Row = 7
+        ColumnSpan = 1
+        HAlign = jgdFill
+        VAlign = jgdDefault
+      end    
+      item
+        Control = btnAccept
+        Column = 1
+        Row = 9
+        ColumnSpan = 1
+        HAlign = jgdRight
+        VAlign = jgdDefault
+      end>
+    TabOrder = 1
+    object pnlCountryDropdown: TPanel
+      Left = 20
+      Height = 32
+      Top = 20
+      Width = 510
+      BevelOuter = bvNone
+      BorderStyle = bsSingle
+      ClientHeight = 28
+      ClientWidth = 506
+      Color = clWhite
+      Cursor = crHandPoint
+      ParentBackground = False
+      ParentColor = False
+      TabOrder = 0
+      OnClick = pnlCountryDropdownClick
+      object paintFlag: TPaintBox
+        Left = 10
+        Height = 12
+        Top = 8
+        Width = 18
+        Cursor = crHandPoint
+        OnClick = pnlCountryDropdownClick
+        OnPaint = paintFlagPaint
+      end
+      object lblCountryText: TLabel
+        Left = 36
+        Height = 17
+        Top = 6
+        Width = 37
+        Caption = 'France'
+        Cursor = crHandPoint
+        Font.Name = 'Segoe UI'
+        Font.Size = 10
+        ParentColor = False
+        ParentFont = False
+        OnClick = pnlCountryDropdownClick
+      end
+      object lblDownArrow: TLabel
+        Left = 482
+        Height = 15
+        Top = 6
+        Width = 15
+        Anchors = [akTop, akRight]
+        Caption = '▼'
+        Cursor = crHandPoint
+        Font.Color = clSilver
+        Font.Name = 'Segoe UI'
+        Font.Size = 8
+        ParentColor = False
+        ParentFont = False
+        OnClick = pnlCountryDropdownClick
+      end
+    end
+    object edtAddress1: TEdit
+      Left = 20
+      Height = 28
+      Top = 62
+      Width = 510
+      Font.Name = 'Segoe UI'
+      Font.Size = 10
+      ParentFont = False
+      TabOrder = 1
+      Text = 'Rue de Rivoli'
+    end
+    object edtAddress2: TEdit
+      Left = 20
+      Height = 28
+      Top = 100
+      Width = 510
+      Font.Name = 'Segoe UI'
+      Font.Size = 10
+      ParentFont = False
+      TabOrder = 2
+      TextHint = 'Address Line 2'
+    end
+    object pnlCityStateZip: TJgdFormLayout
+      Left = 20
+      Height = 28
+      Top = 138
+      Width = 510
+      BevelOuter = bvNone
+      Color = 16119285
+      ParentColor = False
+      ColumnSpecs = 'fill:120dlu:grow, 8dlu, fill:120dlu:grow, 8dlu, fill:60dlu'
+      RowSpecs = 'pref'
+      ControlConstraints = <      
+        item
+          Control = edtCity
+          Column = 1
+          Row = 1
+          ColumnSpan = 1
+          HAlign = jgdDefault
+          VAlign = jgdDefault
+        end      
+        item
+          Control = edtState
+          Column = 3
+          Row = 1
+          ColumnSpan = 1
+          HAlign = jgdDefault
+          VAlign = jgdDefault
+        end      
+        item
+          Control = edtZipCode
+          Column = 5
+          Row = 1
+          ColumnSpan = 1
+          HAlign = jgdDefault
+          VAlign = jgdDefault
+        end>
+      TabOrder = 3
+      object edtCity: TEdit
+        Left = 0
+        Height = 28
+        Top = 0
+        Width = 120
+        Font.Name = 'Segoe UI'
+        Font.Size = 10
+        ParentFont = False
+        TabOrder = 0
+        Text = 'Paris'
+      end
+      object edtState: TEdit
+        Left = 136
+        Height = 28
+        Top = 0
+        Width = 120
+        Font.Name = 'Segoe UI'
+        Font.Size = 10
+        ParentFont = False
+        TabOrder = 1
+        TextHint = 'State'
+      end
+      object edtZipCode: TEdit
+        Left = 272
+        Height = 28
+        Top = 0
+        Width = 60
+        Font.Name = 'Segoe UI'
+        Font.Size = 10
+        ParentFont = False
+        TabOrder = 2
+        Text = '75001'
+      end
+    end
+    object btnAccept: TPanel
+      Left = 410
+      Height = 35
+      Top = 180
+      Width = 120
+      BevelOuter = bvNone
+      BorderStyle = bsSingle
+      Caption = 'Accept'
+      Color = 14737632
+      Cursor = crHandPoint
+      Font.Name = 'Segoe UI'
+      Font.Size = 10
+      ParentBackground = False
+      ParentColor = False
+      TabOrder = 4
+      OnClick = btnAcceptClick
+      OnMouseEnter = btnAcceptMouseEnter
+      OnMouseLeave = btnAcceptMouseLeave
+    end
+  end
+  object popCountries: TPopupMenu
+    Left = 240
+    Top = 150
+  end
+end

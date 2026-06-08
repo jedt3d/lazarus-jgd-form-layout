@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <Name Value="jgd_forms_layout"/>
+    <Type Value="RunAndDesignTime"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <SearchPaths>
+        <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+    </CompilerOptions>
+    <Files Count="2">
+      <Item1>
+        <Filename Value="ujgdformslayout.pas"/>
+        <UnitName Value="ujgdformslayout"/>
+      </Item1>
+      <Item2>
+        <Filename Value="ujgdformslayoutregister.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="ujgdformslayoutregister"/>
+      </Item2>
+    </Files>
+    <RequiredPkgs Count="2">
+      <Item1>
+        <PackageName Value="LCL"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="FCL"/>
+      </Item2>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+  </Package>
+</CONFIG>

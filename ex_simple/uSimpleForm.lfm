@@ -1,0 +1,48 @@
+object SimpleForm: TSimpleForm
+  Left = 350
+  Height = 200
+  Top = 200
+  Width = 400
+  Caption = 'Simple App'
+  ClientHeight = 200
+  ClientWidth = 400
+  OnCreate = FormCreate
+  Position = poScreenCenter
+  object pnlMain: TJgdFormLayout
+    Left = 20
+    Height = 160
+    Top = 20
+    Width = 360
+    Align = alClient
+    BorderSpacing.Around = 20
+    BevelOuter = bvNone
+    Color = clWhite
+    ParentColor = False
+    TabOrder = 0
+    ColumnSpecs = 'fill:pref:grow'
+    RowSpecs = 'fill:pref:grow'
+    ControlConstraints = <    
+      item
+        Control = lblMessage
+        Column = 1
+        Row = 1
+        ColumnSpan = 1
+        HAlign = jgdCenter
+        VAlign = jgdCenter
+      end>
+    object lblMessage: TLabel
+      Left = 20
+      Height = 20
+      Top = 70
+      Width = 320
+      Alignment = taCenter
+      Anchors = [akTop, akLeft, akRight]
+      AutoSize = False
+      Caption = 'Initial Text'
+      Font.Height = -13
+      Font.Name = 'Segoe UI'
+      ParentColor = False
+      ParentFont = False
+    end
+  end
+end

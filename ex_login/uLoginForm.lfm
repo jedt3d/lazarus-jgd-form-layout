@@ -1,0 +1,356 @@
+object LoginForm: TLoginForm
+  Left = 350
+  Height = 520
+  Top = 200
+  Width = 420
+  Caption = 'Welcome back'
+  ClientHeight = 520
+  ClientWidth = 420
+  Color = clWhite
+  Constraints.MinHeight = 480
+  Constraints.MinWidth = 360
+  Position = poScreenCenter
+  object FLayout: TJgdFormLayout
+    Left = 0
+    Height = 520
+    Top = 0
+    Width = 420
+    Align = alClient
+    BorderWidth = 32
+    Color = clWhite
+    ParentColor = False
+    ColumnSpecs = 'fill:pref:grow'
+    RowSpecs = 'pref, 4dlu, pref, 12dlu, pref, 4dlu, pref, 10dlu, pref, 4dlu, pref, 10dlu, pref, 14dlu, 30dlu, 8dlu, 30dlu, 16dlu, pref'
+    ControlConstraints = <    
+      item
+        Control = FTitleLabel
+        Column = 1
+        Row = 1
+        ColumnSpan = 3
+        HAlign = jgdCenter
+        VAlign = jgdDefault
+      end    
+      item
+        Control = FSubTitleLabel
+        Column = 1
+        Row = 3
+        ColumnSpan = 1
+        HAlign = jgdDefault
+        VAlign = jgdDefault
+      end    
+      item
+        Control = FEmailLabel
+        Column = 1
+        Row = 5
+        ColumnSpan = 1
+        HAlign = jgdDefault
+        VAlign = jgdDefault
+      end    
+      item
+        Control = FEmailEdit
+        Column = 1
+        Row = 7
+        ColumnSpan = 1
+        HAlign = jgdDefault
+        VAlign = jgdDefault
+      end    
+      item
+        Control = FPassLabel
+        Column = 1
+        Row = 9
+        ColumnSpan = 1
+        HAlign = jgdDefault
+        VAlign = jgdDefault
+      end    
+      item
+        Control = FPassEdit
+        Column = 1
+        Row = 11
+        ColumnSpan = 1
+        HAlign = jgdDefault
+        VAlign = jgdDefault
+      end    
+      item
+        Control = FRememberPanel
+        Column = 1
+        Row = 13
+        ColumnSpan = 1
+        HAlign = jgdDefault
+        VAlign = jgdDefault
+      end    
+      item
+        Control = FBtnSignIn
+        Column = 1
+        Row = 15
+        ColumnSpan = 1
+        HAlign = jgdDefault
+        VAlign = jgdDefault
+      end    
+      item
+        Control = FBtnGoogle
+        Column = 1
+        Row = 17
+        ColumnSpan = 1
+        HAlign = jgdDefault
+        VAlign = jgdDefault
+      end    
+      item
+        Control = FFooterPanel
+        Column = 1
+        Row = 19
+        ColumnSpan = 1
+        HAlign = jgdCenter
+        VAlign = jgdDefault
+      end>
+    object FTitleLabel: TLabel
+      Left = 32
+      Height = 30
+      Top = 32
+      Width = 356
+      AutoSize = False
+      Caption = 'Welcome back'
+      Font.Color = 1710618
+      Font.Name = 'Segoe UI'
+      Font.Size = 22
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+    object FSubTitleLabel: TLabel
+      Left = 32
+      Height = 20
+      Top = 66
+      Width = 356
+      AutoSize = False
+      Caption = 'Please enter your details'
+      Font.Color = 7697781
+      Font.Name = 'Segoe UI'
+      Font.Size = 10
+      ParentColor = False
+      ParentFont = False
+    end
+    object FEmailLabel: TLabel
+      Left = 32
+      Height = 15
+      Top = 98
+      Width = 356
+      AutoSize = False
+      Caption = 'Email address'
+      Font.Color = 2627600
+      Font.Name = 'Segoe UI'
+      Font.Size = 9
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+    object FEmailEdit: TEdit
+      Left = 32
+      Height = 23
+      Top = 117
+      Width = 356
+      Font.Name = 'Segoe UI'
+      Font.Size = 10
+      ParentFont = False
+      TabOrder = 0
+      TextHint = 'Enter your email'
+    end
+    object FPassLabel: TLabel
+      Left = 32
+      Height = 15
+      Top = 150
+      Width = 356
+      AutoSize = False
+      Caption = 'Password'
+      Font.Color = 2627600
+      Font.Name = 'Segoe UI'
+      Font.Size = 9
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+    object FPassEdit: TEdit
+      Left = 32
+      Height = 23
+      Top = 169
+      Width = 356
+      EchoMode = emPassword
+      Font.Name = 'Segoe UI'
+      Font.Size = 10
+      ParentFont = False
+      PasswordChar = '*'
+      TabOrder = 1
+      TextHint = 'Enter your password'
+    end
+    object FRememberPanel: TPanel
+      Left = 32
+      Height = 20
+      Top = 202
+      Width = 356
+      BevelOuter = bvNone
+      ClientHeight = 20
+      ClientWidth = 356
+      Color = clWhite
+      ParentBackground = False
+      ParentColor = False
+      TabOrder = 2
+      object FRememberCheckBox: TCheckBox
+        Left = 0
+        Height = 20
+        Top = 0
+        Width = 145
+        Align = alLeft
+        Caption = 'Remember for 30 days'
+        Font.Color = 5592405
+        Font.Name = 'Segoe UI'
+        Font.Size = 9
+        ParentFont = False
+        TabOrder = 0
+      end
+      object FForgotLabel: TLabel
+        Left = 266
+        Height = 20
+        Top = 0
+        Width = 90
+        Align = alRight
+        Caption = 'Forgot password'
+        Cursor = crHandPoint
+        Font.Color = 14242943
+        Font.Name = 'Segoe UI'
+        Font.Size = 9
+        Font.Style = [fsBold, fsUnderline]
+        ParentColor = False
+        ParentFont = False
+        OnClick = ForgotPasswordClick
+      end
+    end
+    object FBtnSignIn: TPanel
+      Left = 32
+      Height = 45
+      Top = 236
+      Width = 356
+      BevelOuter = bvNone
+      Caption = 'Sign in'
+      Color = 14242943
+      Cursor = crHandPoint
+      Font.Color = clWhite
+      Font.Name = 'Segoe UI'
+      Font.Size = 10
+      Font.Style = [fsBold]
+      ParentBackground = False
+      ParentColor = False
+      TabOrder = 3
+      OnClick = BtnSignInClick
+      OnMouseEnter = BtnSignInMouseEnter
+      OnMouseLeave = BtnSignInMouseLeave
+    end
+    object FBtnGoogle: TPanel
+      Left = 32
+      Height = 45
+      Top = 289
+      Width = 356
+      BevelOuter = bvNone
+      BorderStyle = bsSingle
+      ClientHeight = 41
+      ClientWidth = 352
+      Color = clWhite
+      Cursor = crHandPoint
+      ParentBackground = False
+      ParentColor = False
+      TabOrder = 4
+      OnClick = BtnGoogleClick
+      OnMouseEnter = BtnGoogleMouseEnter
+      OnMouseLeave = BtnGoogleMouseLeave
+      object FGoogleContentPanel: TPanel
+        Left = 96
+        Height = 20
+        Top = 10
+        Width = 160
+        BevelOuter = bvNone
+        ClientHeight = 20
+        ClientWidth = 160
+        Color = clWhite
+        ParentBackground = False
+        ParentColor = False
+        TabOrder = 0
+        object FGoogleLogo: TPaintBox
+          Left = 0
+          Height = 16
+          Top = 2
+          Width = 16
+          Align = alLeft
+          BorderSpacing.Top = 2
+          BorderSpacing.Bottom = 2
+          OnPaint = GoogleLogoPaint
+        end
+        object FGoogleSpacer: TPanel
+          Left = 16
+          Height = 20
+          Top = 0
+          Width = 8
+          Align = alLeft
+          BevelOuter = bvNone
+          Color = clWhite
+          ParentBackground = False
+          ParentColor = False
+          TabOrder = 0
+        end
+        object FGoogleText: TLabel
+          Left = 24
+          Height = 20
+          Top = 0
+          Width = 136
+          Align = alClient
+          Caption = 'Sign in with Google'
+          Font.Color = 4674663
+          Font.Name = 'Segoe UI'
+          Font.Size = 9
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+        end
+      end
+    end
+    object FFooterPanel: TPanel
+      Left = 110
+      Height = 20
+      Top = 350
+      Width = 200
+      BevelOuter = bvNone
+      ClientHeight = 20
+      ClientWidth = 200
+      Color = clWhite
+      ParentBackground = False
+      ParentColor = False
+      TabOrder = 5
+      object FNoAccountLabel: TLabel
+        Left = 0
+        Height = 20
+        Top = 0
+        Width = 127
+        Align = alLeft
+        Caption = 'Don''t have an account? '
+        Font.Color = 6713477
+        Font.Name = 'Segoe UI'
+        Font.Size = 9
+        ParentColor = False
+        ParentFont = False
+      end
+      object FSignUpLabel: TLabel
+        Left = 127
+        Height = 20
+        Top = 0
+        Width = 43
+        Align = alLeft
+        Caption = 'Sign up'
+        Cursor = crHandPoint
+        Font.Color = 14242943
+        Font.Name = 'Segoe UI'
+        Font.Size = 9
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        OnClick = SignUpClick
+      end
+    end
+  end
+end

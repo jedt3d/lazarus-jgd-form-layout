@@ -1,0 +1,912 @@
+object EmployeeForm: TEmployeeForm
+  Left = 250
+  Height = 600
+  Top = 150
+  Width = 1000
+  Caption = 'Employees'
+  ClientHeight = 600
+  ClientWidth = 1000
+  Color = 16250871
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  Position = poScreenCenter
+  object pnlTopToolbar: TPanel
+    Left = 0
+    Height = 48
+    Top = 0
+    Width = 1000
+    Align = alTop
+    BevelOuter = bvNone
+    Color = 15790320
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 0
+    object btnNewSupervisor: TSpeedButton
+      Left = 10
+      Height = 32
+      Top = 8
+      Width = 130
+      Caption = 'New Supervisor'
+      Flat = True
+      Font.Color = 4210752
+      Font.Name = 'Segoe UI'
+      Font.Size = 10
+      ParentFont = False
+      OnClick = btnNewSupervisorClick
+    end
+    object btnNewEmployee: TSpeedButton
+      Left = 148
+      Height = 32
+      Top = 8
+      Width = 120
+      Caption = 'New Employee'
+      Flat = True
+      Font.Color = 4210752
+      Font.Name = 'Segoe UI'
+      Font.Size = 10
+      ParentFont = False
+      OnClick = btnNewEmployeeClick
+    end
+    object btnSaveChanges: TSpeedButton
+      Left = 276
+      Height = 32
+      Top = 8
+      Width = 120
+      Caption = 'Save Changes'
+      Flat = True
+      Font.Color = 4210752
+      Font.Name = 'Segoe UI'
+      Font.Size = 10
+      ParentFont = False
+      OnClick = btnSaveChangesClick
+    end
+    object btnResetChanges: TSpeedButton
+      Left = 404
+      Height = 32
+      Top = 8
+      Width = 120
+      Caption = 'Reset Changes'
+      Flat = True
+      Font.Color = 4210752
+      Font.Name = 'Segoe UI'
+      Font.Size = 10
+      ParentFont = False
+      OnClick = btnResetChangesClick
+    end
+    object btnDeleteEmployee: TSpeedButton
+      Left = 532
+      Height = 32
+      Top = 8
+      Width = 130
+      Caption = 'Delete Employee'
+      Flat = True
+      Font.Color = 4210752
+      Font.Name = 'Segoe UI'
+      Font.Size = 10
+      ParentFont = False
+      OnClick = btnDeleteEmployeeClick
+    end
+  end
+  object pnlMain: TPanel
+    Left = 0
+    Height = 552
+    Top = 48
+    Width = 1000
+    Align = alClient
+    BevelOuter = bvNone
+    ClientHeight = 552
+    ClientWidth = 1000
+    TabOrder = 1
+    object tvEmployees: TTreeView
+      Left = 10
+      Height = 532
+      Top = 10
+      Width = 430
+      Align = alLeft
+      BorderSpacing.Around = 10
+      Font.Name = 'Segoe UI'
+      Font.Size = 10
+      ReadOnly = True
+      TabOrder = 0
+      OnSelectionChanged = tvEmployeesSelectionChanged
+    end
+    object splitterMain: TSplitter
+      Left = 450
+      Height = 552
+      Top = 0
+      Width = 6
+    end
+    object pnlDetails: TJgdFormLayout
+      Left = 456
+      Height = 552
+      Top = 0
+      Width = 544
+      Align = alClient
+      BorderWidth = 20
+      Color = 16250871
+      ParentColor = False
+      ColumnSpecs = 'right:pref, 4dlu, fill:150dlu:grow, 8dlu, fill:100dlu'
+      RowSpecs = 'pref, 4dlu, pref, 4dlu, pref, 4dlu, pref, 8dlu, pref, 4dlu, pref, 8dlu, pref, 4dlu, pref, 4dlu, pref, 8dlu, pref, 4dlu, pref, 4dlu, pref'
+      ControlConstraints = <      
+        item
+          Control = lblFirstName
+          Column = 1
+          Row = 1
+          ColumnSpan = 1
+          HAlign = jgdRight
+          VAlign = jgdDefault
+        end      
+        item
+          Control = edtFirstName
+          Column = 3
+          Row = 1
+          ColumnSpan = 1
+          HAlign = jgdDefault
+          VAlign = jgdDefault
+        end      
+        item
+          Control = lblLastName
+          Column = 1
+          Row = 3
+          ColumnSpan = 1
+          HAlign = jgdRight
+          VAlign = jgdDefault
+        end      
+        item
+          Control = edtLastName
+          Column = 3
+          Row = 3
+          ColumnSpan = 1
+          HAlign = jgdDefault
+          VAlign = jgdDefault
+        end      
+        item
+          Control = lblFullName
+          Column = 1
+          Row = 5
+          ColumnSpan = 1
+          HAlign = jgdRight
+          VAlign = jgdDefault
+        end      
+        item
+          Control = edtFullName
+          Column = 3
+          Row = 5
+          ColumnSpan = 1
+          HAlign = jgdDefault
+          VAlign = jgdDefault
+        end      
+        item
+          Control = lblBirthDate
+          Column = 1
+          Row = 7
+          ColumnSpan = 1
+          HAlign = jgdRight
+          VAlign = jgdDefault
+        end      
+        item
+          Control = edtBirthDate
+          Column = 3
+          Row = 7
+          ColumnSpan = 1
+          HAlign = jgdDefault
+          VAlign = jgdDefault
+        end      
+        item
+          Control = pnlPhoto
+          Column = 5
+          Row = 1
+          ColumnSpan = 1
+          RowSpan = 7
+          HAlign = jgdFill
+          VAlign = jgdFill
+        end      
+        item
+          Control = lblAddress
+          Column = 1
+          Row = 9
+          ColumnSpan = 1
+          HAlign = jgdRight
+          VAlign = jgdDefault
+        end      
+        item
+          Control = edtAddress
+          Column = 3
+          Row = 9
+          ColumnSpan = 3
+          HAlign = jgdDefault
+          VAlign = jgdDefault
+        end      
+        item
+          Control = lblCity
+          Column = 1
+          Row = 11
+          ColumnSpan = 1
+          HAlign = jgdRight
+          VAlign = jgdDefault
+        end      
+        item
+          Control = pnlCityStateZip
+          Column = 3
+          Row = 11
+          ColumnSpan = 3
+          HAlign = jgdFill
+          VAlign = jgdDefault
+        end      
+        item
+          Control = lblHomePhone
+          Column = 1
+          Row = 13
+          ColumnSpan = 1
+          HAlign = jgdRight
+          VAlign = jgdDefault
+        end      
+        item
+          Control = edtHomePhone
+          Column = 3
+          Row = 13
+          ColumnSpan = 3
+          HAlign = jgdDefault
+          VAlign = jgdDefault
+        end      
+        item
+          Control = lblMobilePhone
+          Column = 1
+          Row = 15
+          ColumnSpan = 1
+          HAlign = jgdRight
+          VAlign = jgdDefault
+        end      
+        item
+          Control = edtMobilePhone
+          Column = 3
+          Row = 15
+          ColumnSpan = 3
+          HAlign = jgdDefault
+          VAlign = jgdDefault
+        end      
+        item
+          Control = lblEmail
+          Column = 1
+          Row = 17
+          ColumnSpan = 1
+          HAlign = jgdRight
+          VAlign = jgdDefault
+        end      
+        item
+          Control = edtEmail
+          Column = 3
+          Row = 17
+          ColumnSpan = 3
+          HAlign = jgdDefault
+          VAlign = jgdDefault
+        end      
+        item
+          Control = lblTitle
+          Column = 1
+          Row = 19
+          ColumnSpan = 1
+          HAlign = jgdRight
+          VAlign = jgdDefault
+        end      
+        item
+          Control = edtTitle
+          Column = 3
+          Row = 19
+          ColumnSpan = 1
+          HAlign = jgdDefault
+          VAlign = jgdDefault
+        end      
+        item
+          Control = pnlPrefixContainer
+          Column = 5
+          Row = 19
+          ColumnSpan = 1
+          HAlign = jgdFill
+          VAlign = jgdDefault
+        end      
+        item
+          Control = lblDepartment
+          Column = 1
+          Row = 21
+          ColumnSpan = 1
+          HAlign = jgdRight
+          VAlign = jgdDefault
+        end      
+        item
+          Control = cboDepartment
+          Column = 3
+          Row = 21
+          ColumnSpan = 3
+          HAlign = jgdDefault
+          VAlign = jgdDefault
+        end      
+        item
+          Control = lblHireDate
+          Column = 1
+          Row = 23
+          ColumnSpan = 1
+          HAlign = jgdRight
+          VAlign = jgdDefault
+        end      
+        item
+          Control = edtHireDate
+          Column = 3
+          Row = 23
+          ColumnSpan = 1
+          HAlign = jgdDefault
+          VAlign = jgdDefault
+        end      
+        item
+          Control = pnlStatusContainer
+          Column = 5
+          Row = 23
+          ColumnSpan = 1
+          HAlign = jgdFill
+          VAlign = jgdDefault
+        end>
+      object lblFirstName: TLabel
+        Left = 20
+        Height = 15
+        Top = 20
+        Width = 60
+        AutoSize = False
+        Caption = 'First Name'
+        Font.Name = 'Segoe UI'
+        Font.Size = 9
+        ParentColor = False
+        ParentFont = False
+      end
+      object edtFirstName: TEdit
+        Left = 84
+        Height = 23
+        Top = 20
+        Width = 150
+        Font.Name = 'Segoe UI'
+        Font.Size = 9
+        ParentFont = False
+        TabOrder = 0
+      end
+      object lblLastName: TLabel
+        Left = 20
+        Height = 15
+        Top = 47
+        Width = 60
+        AutoSize = False
+        Caption = 'Last Name'
+        Font.Name = 'Segoe UI'
+        Font.Size = 9
+        ParentColor = False
+        ParentFont = False
+      end
+      object edtLastName: TEdit
+        Left = 84
+        Height = 23
+        Top = 47
+        Width = 150
+        Font.Name = 'Segoe UI'
+        Font.Size = 9
+        ParentFont = False
+        TabOrder = 1
+      end
+      object lblFullName: TLabel
+        Left = 20
+        Height = 15
+        Top = 74
+        Width = 60
+        AutoSize = False
+        Caption = 'Full Name'
+        Font.Name = 'Segoe UI'
+        Font.Size = 9
+        ParentColor = False
+        ParentFont = False
+      end
+      object edtFullName: TEdit
+        Left = 84
+        Height = 23
+        Top = 74
+        Width = 150
+        Color = 15790320
+        Font.Name = 'Segoe UI'
+        Font.Size = 9
+        ParentFont = False
+        ReadOnly = True
+        TabOrder = 2
+      end
+      object lblBirthDate: TLabel
+        Left = 20
+        Height = 15
+        Top = 101
+        Width = 60
+        AutoSize = False
+        Caption = 'Birth Date'
+        Font.Name = 'Segoe UI'
+        Font.Size = 9
+        ParentColor = False
+        ParentFont = False
+      end
+      object edtBirthDate: TEdit
+        Left = 84
+        Height = 23
+        Top = 101
+        Width = 150
+        Font.Name = 'Segoe UI'
+        Font.Size = 9
+        ParentFont = False
+        TabOrder = 3
+      end
+      object pnlPhoto: TPanel
+        Left = 242
+        Height = 104
+        Top = 20
+        Width = 100
+        BevelOuter = bvNone
+        ClientHeight = 104
+        ClientWidth = 100
+        Color = clWhite
+        ParentBackground = False
+        ParentColor = False
+        TabOrder = 4
+        object paintPhoto: TPaintBox
+          Left = 0
+          Height = 104
+          Top = 0
+          Width = 100
+          Align = alClient
+          OnPaint = paintPhotoPaint
+        end
+      end
+      object lblAddress: TLabel
+        Left = 20
+        Height = 15
+        Top = 132
+        Width = 60
+        AutoSize = False
+        Caption = 'Address'
+        Font.Name = 'Segoe UI'
+        Font.Size = 9
+        ParentColor = False
+        ParentFont = False
+      end
+      object edtAddress: TEdit
+        Left = 84
+        Height = 23
+        Top = 132
+        Width = 258
+        Font.Name = 'Segoe UI'
+        Font.Size = 9
+        ParentFont = False
+        TabOrder = 5
+      end
+      object lblCity: TLabel
+        Left = 20
+        Height = 15
+        Top = 159
+        Width = 60
+        AutoSize = False
+        Caption = 'City'
+        Font.Name = 'Segoe UI'
+        Font.Size = 9
+        ParentColor = False
+        ParentFont = False
+      end
+      object pnlCityStateZip: TJgdFormLayout
+        Left = 84
+        Height = 23
+        Top = 159
+        Width = 258
+        BevelOuter = bvNone
+        Color = 16250871
+        ParentColor = False
+        ColumnSpecs = 'fill:60dlu:grow, 8dlu, right:pref, 4dlu, fill:35dlu, 8dlu, right:pref, 4dlu, fill:55dlu'
+        RowSpecs = 'pref'
+        ControlConstraints = <        
+          item
+            Control = edtCity
+            Column = 1
+            Row = 1
+            ColumnSpan = 1
+            HAlign = jgdDefault
+            VAlign = jgdDefault
+          end        
+          item
+            Control = lblState
+            Column = 3
+            Row = 1
+            ColumnSpan = 1
+            HAlign = jgdRight
+            VAlign = jgdDefault
+          end        
+          item
+            Control = cboState
+            Column = 5
+            Row = 1
+            ColumnSpan = 1
+            HAlign = jgdDefault
+            VAlign = jgdDefault
+          end        
+          item
+            Control = lblZipCode
+            Column = 7
+            Row = 1
+            ColumnSpan = 1
+            HAlign = jgdRight
+            VAlign = jgdDefault
+          end        
+          item
+            Control = edtZipCode
+            Column = 9
+            Row = 1
+            ColumnSpan = 1
+            HAlign = jgdDefault
+            VAlign = jgdDefault
+          end>
+        TabOrder = 6
+        object edtCity: TEdit
+          Left = 0
+          Height = 23
+          Top = 0
+          Width = 60
+          Font.Name = 'Segoe UI'
+          Font.Size = 9
+          ParentFont = False
+          TabOrder = 0
+        end
+        object lblState: TLabel
+          Left = 68
+          Height = 15
+          Top = 0
+          Width = 30
+          AutoSize = False
+          Caption = 'State'
+          Font.Name = 'Segoe UI'
+          Font.Size = 9
+          ParentColor = False
+          ParentFont = False
+        end
+        object cboState: TComboBox
+          Left = 102
+          Height = 23
+          Top = 0
+          Width = 35
+          Font.Name = 'Segoe UI'
+          Font.Size = 9
+          ItemHeight = 15
+          Items.Strings = (
+            'AL'
+            'AK'
+            'AZ'
+            'AR'
+            'CA'
+            'CO'
+            'CT'
+            'DE'
+            'FL'
+            'GA'
+            'HI'
+            'ID'
+            'IL'
+            'IN'
+            'IA'
+            'KS'
+            'KY'
+            'LA'
+            'ME'
+            'MD'
+            'MA'
+            'MI'
+            'MN'
+            'MS'
+            'MO'
+            'MT'
+            'NE'
+            'NV'
+            'NH'
+            'NJ'
+            'NM'
+            'NY'
+            'NC'
+            'ND'
+            'OH'
+            'OK'
+            'OR'
+            'PA'
+            'RI'
+            'SC'
+            'SD'
+            'TN'
+            'TX'
+            'UT'
+            'VT'
+            'VA'
+            'WA'
+            'WV'
+            'WI'
+            'WY'
+          )
+          ParentFont = False
+          TabOrder = 1
+        end
+        object lblZipCode: TLabel
+          Left = 145
+          Height = 15
+          Top = 0
+          Width = 45
+          AutoSize = False
+          Caption = 'ZIP code'
+          Font.Name = 'Segoe UI'
+          Font.Size = 9
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtZipCode: TEdit
+          Left = 194
+          Height = 23
+          Top = 0
+          Width = 64
+          Font.Name = 'Segoe UI'
+          Font.Size = 9
+          ParentFont = False
+          TabOrder = 2
+        end
+      end
+      object lblHomePhone: TLabel
+        Left = 20
+        Height = 15
+        Top = 190
+        Width = 60
+        AutoSize = False
+        Caption = 'Home Phone'
+        Font.Name = 'Segoe UI'
+        Font.Size = 9
+        ParentColor = False
+        ParentFont = False
+      end
+      object edtHomePhone: TEdit
+        Left = 84
+        Height = 23
+        Top = 190
+        Width = 258
+        Font.Name = 'Segoe UI'
+        Font.Size = 9
+        ParentFont = False
+        TabOrder = 7
+      end
+      object lblMobilePhone: TLabel
+        Left = 20
+        Height = 15
+        Top = 217
+        Width = 60
+        AutoSize = False
+        Caption = 'Mobile Phone'
+        Font.Name = 'Segoe UI'
+        Font.Size = 9
+        ParentColor = False
+        ParentFont = False
+      end
+      object edtMobilePhone: TEdit
+        Left = 84
+        Height = 23
+        Top = 217
+        Width = 258
+        Font.Name = 'Segoe UI'
+        Font.Size = 9
+        ParentFont = False
+        TabOrder = 8
+      end
+      object lblEmail: TLabel
+        Left = 20
+        Height = 15
+        Top = 244
+        Width = 60
+        AutoSize = False
+        Caption = 'Email'
+        Font.Name = 'Segoe UI'
+        Font.Size = 9
+        ParentColor = False
+        ParentFont = False
+      end
+      object edtEmail: TEdit
+        Left = 84
+        Height = 23
+        Top = 244
+        Width = 258
+        Font.Name = 'Segoe UI'
+        Font.Size = 9
+        ParentFont = False
+        TabOrder = 9
+      end
+      object lblTitle: TLabel
+        Left = 20
+        Height = 15
+        Top = 275
+        Width = 60
+        AutoSize = False
+        Caption = 'Title'
+        Font.Name = 'Segoe UI'
+        Font.Size = 9
+        ParentColor = False
+        ParentFont = False
+      end
+      object edtTitle: TEdit
+        Left = 84
+        Height = 23
+        Top = 275
+        Width = 150
+        Font.Name = 'Segoe UI'
+        Font.Size = 9
+        ParentFont = False
+        TabOrder = 10
+      end
+      object pnlPrefixContainer: TJgdFormLayout
+        Left = 242
+        Height = 23
+        Top = 275
+        Width = 100
+        BevelOuter = bvNone
+        Color = 16250871
+        ParentColor = False
+        ColumnSpecs = 'right:pref, 4dlu, fill:pref:grow'
+        RowSpecs = 'pref'
+        ControlConstraints = <        
+          item
+            Control = lblPrefix
+            Column = 1
+            Row = 1
+            ColumnSpan = 1
+            HAlign = jgdRight
+            VAlign = jgdDefault
+          end        
+          item
+            Control = cboPrefix
+            Column = 3
+            Row = 1
+            ColumnSpan = 1
+            HAlign = jgdDefault
+            VAlign = jgdDefault
+          end>
+        TabOrder = 11
+        object lblPrefix: TLabel
+          Left = 0
+          Height = 15
+          Top = 0
+          Width = 35
+          AutoSize = False
+          Caption = 'Prefix'
+          Font.Name = 'Segoe UI'
+          Font.Size = 9
+          ParentColor = False
+          ParentFont = False
+        end
+        object cboPrefix: TComboBox
+          Left = 39
+          Height = 23
+          Top = 0
+          Width = 61
+          Font.Name = 'Segoe UI'
+          Font.Size = 9
+          ItemHeight = 15
+          Items.Strings = (
+            'Mr'
+            'Ms'
+            'Mrs'
+            'Dr'
+          )
+          ParentFont = False
+          TabOrder = 0
+        end
+      end
+      object lblDepartment: TLabel
+        Left = 20
+        Height = 15
+        Top = 302
+        Width = 60
+        AutoSize = False
+        Caption = 'Department'
+        Font.Name = 'Segoe UI'
+        Font.Size = 9
+        ParentColor = False
+        ParentFont = False
+      end
+      object cboDepartment: TComboBox
+        Left = 84
+        Height = 23
+        Top = 302
+        Width = 258
+        Font.Name = 'Segoe UI'
+        Font.Size = 9
+        ItemHeight = 15
+        Items.Strings = (
+          'Management'
+          'IT'
+          'Quality Assurance'
+          'Sales'
+          'Marketing'
+          'Finance'
+        )
+        ParentFont = False
+        TabOrder = 12
+      end
+      object lblHireDate: TLabel
+        Left = 20
+        Height = 15
+        Top = 329
+        Width = 60
+        AutoSize = False
+        Caption = 'Hire Date'
+        Font.Name = 'Segoe UI'
+        Font.Size = 9
+        ParentColor = False
+        ParentFont = False
+      end
+      object edtHireDate: TEdit
+        Left = 84
+        Height = 23
+        Top = 329
+        Width = 150
+        Font.Name = 'Segoe UI'
+        Font.Size = 9
+        ParentFont = False
+        TabOrder = 13
+      end
+      object pnlStatusContainer: TJgdFormLayout
+        Left = 242
+        Height = 23
+        Top = 329
+        Width = 100
+        BevelOuter = bvNone
+        Color = 16250871
+        ParentColor = False
+        ColumnSpecs = 'right:pref, 4dlu, fill:pref:grow'
+        RowSpecs = 'pref'
+        ControlConstraints = <        
+          item
+            Control = lblStatus
+            Column = 1
+            Row = 1
+            ColumnSpan = 1
+            HAlign = jgdRight
+            VAlign = jgdDefault
+          end        
+          item
+            Control = cboStatus
+            Column = 3
+            Row = 1
+            ColumnSpan = 1
+            HAlign = jgdDefault
+            VAlign = jgdDefault
+          end>
+        TabOrder = 14
+        object lblStatus: TLabel
+          Left = 0
+          Height = 15
+          Top = 0
+          Width = 35
+          AutoSize = False
+          Caption = 'Status'
+          Font.Name = 'Segoe UI'
+          Font.Size = 9
+          ParentColor = False
+          ParentFont = False
+        end
+        object cboStatus: TComboBox
+          Left = 39
+          Height = 23
+          Top = 0
+          Width = 61
+          Font.Name = 'Segoe UI'
+          Font.Size = 9
+          ItemHeight = 15
+          Items.Strings = (
+            'Salaried'
+            'Hourly'
+            'Contract'
+            'Terminated'
+          )
+          ParentFont = False
+          TabOrder = 0
+        end
+      end
+    end
+  end
+end

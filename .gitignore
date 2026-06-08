@@ -1,0 +1,12 @@
+# Lazarus and FPC compiled files
+lib/
+backup/
+*.exe
+*.o
+*.obj
+*.ppu
+*.compiled
+*.lps
+*.bak
+*.res
+*.compiled
