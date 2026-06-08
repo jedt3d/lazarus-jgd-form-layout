@@ -83,6 +83,40 @@ cd lazarus-jgd-form-layout
 
 Create a new application and check that `TJgdFormLayout` is available in the Designer component palette under the **JGoodies** tab.
 
+### macOS / Apple Silicon Build Note
+
+On recent macOS/Xcode toolchains, Lazarus Cocoa builds can fail during the final
+link step even after this package compiles successfully. The failure usually
+looks like this:
+
+```text
+ld: malformed method list atom ... cocoawsextctrls.o
+```
+
+This is a Lazarus/FPC Cocoa linking issue, not a `jgd_forms_layout` compile
+error. Rebuild the IDE with Apple's classic linker option:
+
+```bash
+lazbuild --add-package jgd_forms_layout.lpk --build-ide=-k-ld_classic
+```
+
+If the package is already registered in Lazarus, rebuild the IDE with:
+
+```bash
+lazbuild --build-ide=-k-ld_classic
+```
+
+Cocoa example applications may need the same linker option:
+
+```bash
+lazbuild --opt=-k-ld_classic ex_simple/SimpleApp.lpi
+```
+
+In the Lazarus IDE, add `-k-ld_classic` to the selected IDE build profile before
+rebuilding from **Package > Install/Uninstall Packages**. Apple marks the classic
+linker as deprecated, so recheck this workaround after macOS, Xcode, Lazarus, or
+FPC upgrades.
+
 ---
 
 ## Core Component Architecture
@@ -605,6 +639,26 @@ TComponent
 1. Ensure you have the latest Lazarus IDE installed
 2. Go to **Tools** → **Options** → **Environment** → **Lazarus Directory** and verify the path is correct
 3. Try **Package** → **Clean Up** before reinstalling
+
+### Issue: Package Compiles but Lazarus IDE Rebuild Fails on macOS
+
+**Cause:** The package build succeeded, but the Lazarus IDE failed during the
+final Cocoa link step. On some recent macOS/Xcode setups, Apple's default linker
+rejects a Lazarus Cocoa object file such as `cocoawsextctrls.o` and reports
+`malformed method list atom`.
+
+**Solution:** Rebuild the IDE with the classic linker option:
+
+```bash
+lazbuild --build-ide=-k-ld_classic
+```
+
+For example projects or your own Cocoa LCL applications, pass the same option to
+the project build:
+
+```bash
+lazbuild --opt=-k-ld_classic path/to/project.lpi
+```
 
 ### Issue: Test Suite Compilation Fails
 
