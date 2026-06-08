@@ -69,7 +69,7 @@ object CreditCardForm: TCreditCardForm
     Color = 16119285
     ParentColor = False
     ColumnSpecs = 'fill:pref:grow'
-    RowSpecs = 'pref, 10dlu, pref, 10dlu, pref, 14dlu, pref'
+    RowSpecs = 'pref, 10dlu, pref, 10dlu, pref, 10dlu, pref'
     ControlConstraints = <    
       item
         Control = paintCards
@@ -96,11 +96,11 @@ object CreditCardForm: TCreditCardForm
         VAlign = jgdDefault
       end    
       item
-        Control = btnSubmit
+        Control = pnlBottomLayout
         Column = 1
         Row = 7
         ColumnSpan = 1
-        HAlign = jgdLeft
+        HAlign = jgdFill
         VAlign = jgdDefault
       end>
     TabOrder = 1
@@ -147,7 +147,8 @@ object CreditCardForm: TCreditCardForm
         Left = 46
         Height = 20
         Top = 4
-        Width = 175
+        Width = 292
+        Anchors = [akTop, akLeft, akRight]
         BorderStyle = bsNone
         Font.Name = 'Segoe UI'
         Font.Size = 10
@@ -157,12 +158,61 @@ object CreditCardForm: TCreditCardForm
         OnChange = edtCardNumberChange
         OnKeyDown = edtCardNumberKeyDown
       end
+    end
+    object pnlBottomLayout: TJgdFormLayout
+      Left = 20
+      Height = 35
+      Top = 280
+      Width = 350
+      BevelOuter = bvNone
+      Color = 16119285
+      ParentColor = False
+      ColumnSpecs = 'pref, fill:0:grow, 60dlu, 8dlu, 40dlu'
+      RowSpecs = 'pref'
+      ControlConstraints = <      
+        item
+          Control = btnSubmit
+          Column = 1
+          Row = 1
+          ColumnSpan = 1
+          HAlign = jgdDefault
+          VAlign = jgdCenter
+        end      
+        item
+          Control = edtExpiry
+          Column = 3
+          Row = 1
+          ColumnSpan = 1
+          HAlign = jgdFill
+          VAlign = jgdCenter
+        end      
+        item
+          Control = edtCVC
+          Column = 5
+          Row = 1
+          ColumnSpan = 1
+          HAlign = jgdFill
+          VAlign = jgdCenter
+        end>
+      TabOrder = 2
+      object btnSubmit: TButton
+        Left = 0
+        Height = 35
+        Top = 0
+        Width = 120
+        Caption = 'Add Card'
+        Font.Name = 'Segoe UI'
+        Font.Size = 10
+        ParentFont = False
+        TabOrder = 0
+        OnClick = btnSubmitClick
+      end
       object edtExpiry: TEdit
-        Left = 231
-        Height = 20
-        Top = 4
-        Width = 55
-        BorderStyle = bsNone
+        Left = 128
+        Height = 28
+        Top = 3
+        Width = 60
+        BorderStyle = bsSingle
         Font.Name = 'Segoe UI'
         Font.Size = 10
         ParentFont = False
@@ -172,11 +222,11 @@ object CreditCardForm: TCreditCardForm
         OnKeyDown = edtExpiryKeyDown
       end
       object edtCVC: TEdit
-        Left = 296
-        Height = 20
-        Top = 4
-        Width = 42
-        BorderStyle = bsNone
+        Left = 196
+        Height = 28
+        Top = 3
+        Width = 40
+        BorderStyle = bsSingle
         Font.Name = 'Segoe UI'
         Font.Size = 10
         ParentFont = False
@@ -184,18 +234,6 @@ object CreditCardForm: TCreditCardForm
         Text = '324'
         OnChange = edtCVCChange
       end
-    end
-    object btnSubmit: TButton
-      Left = 20
-      Height = 35
-      Top = 284
-      Width = 120
-      Caption = 'Add Card'
-      Font.Name = 'Segoe UI'
-      Font.Size = 10
-      ParentFont = False
-      TabOrder = 2
-      OnClick = btnSubmitClick
     end
   end
 end

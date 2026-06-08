@@ -19,9 +19,10 @@ type
     pnlCardInput: TPanel;
     paintBrandLogo: TPaintBox;
     edtCardNumber: TEdit;
+    pnlBottomLayout: TJgdFormLayout;
+    btnSubmit: TButton;
     edtExpiry: TEdit;
     edtCVC: TEdit;
-    btnSubmit: TButton;
 
     procedure FormCreate(Sender: TObject);
     procedure FormPaint(Sender: TObject);
@@ -152,7 +153,6 @@ var
   NumDigits: string;
   I: Integer;
 begin
-  // Standardize Card Number format
   NumDigits := '';
   for I := 1 to Length(edtCardNumber.Text) do
     if edtCardNumber.Text[I] in ['0'..'9'] then
@@ -190,7 +190,7 @@ begin
     if AOnCard then
       ACanvas.Font.Color := clWhite
     else
-      ACanvas.Font.Color := TColor($8A3B1A); // Dark blue
+      ACanvas.Font.Color := TColor($8A3B1A);
       
     ACanvas.TextOut(ARect.Left + (ARect.Width - ACanvas.TextWidth('VISA')) div 2, 
                     ARect.Top + (ARect.Height - ACanvas.TextHeight('VISA')) div 2, 
@@ -201,12 +201,10 @@ begin
     Radius := (ARect.Height * 7) div 20;
     CY := ARect.Top + ARect.Height div 2;
     
-    // Left circle: Red
     ACanvas.Brush.Color := TColor($2A2AEB);
     CX := ARect.Left + (ARect.Width * 4) div 10;
     ACanvas.Ellipse(CX - Radius, CY - Radius, CX + Radius, CY + Radius);
     
-    // Right circle: Yellow/Orange
     ACanvas.Brush.Color := TColor($10A5F9);
     CX := ARect.Left + (ARect.Width * 6) div 10;
     ACanvas.Ellipse(CX - Radius, CY - Radius, CX + Radius, CY + Radius);
@@ -222,6 +220,7 @@ begin
     ACanvas.Brush.Color := TColor($B0B0B0);
     if AOnCard then
       ACanvas.Brush.Color := TColor($A8B8C8);
+      
     ACanvas.FillRect(ARect.Left + 6, ARect.Top + 6, ARect.Left + 12, ARect.Top + 10);
   end;
 end;
@@ -236,67 +235,57 @@ begin
   GetCardParts(CardNum, Expiry, Cvc);
   Brand := GetCardBrand;
 
-  // Clear background
   LCanvas.Brush.Color := Self.Color;
   LCanvas.FillRect(paintCards.ClientRect);
 
   LCanvas.Pen.Style := psClear;
   LCanvas.Brush.Style := bsSolid;
 
-  // 1. Draw Back Card (Behind)
+  // 1. Draw Back Card
   LCanvas.Brush.Color := TColor($D29864);
   LCanvas.RoundRect(110, 30, 330, 160, 10, 10);
 
-  // Black magnetic stripe
   LCanvas.Brush.Color := clBlack;
   LCanvas.FillRect(110, 45, 330, 68);
 
-  // White CVC box
   LCanvas.Brush.Color := clWhite;
   LCanvas.FillRect(250, 80, 310, 102);
 
-  // CVC digits
   LCanvas.Font.Name := 'Segoe UI';
   LCanvas.Font.Size := 9;
   LCanvas.Font.Color := clBlack;
   LCanvas.Font.Style := [];
   LCanvas.TextOut(255, 82, Cvc);
 
-  // CVC code label below
   LCanvas.Font.Size := 7;
   LCanvas.Font.Color := clWhite;
   LCanvas.TextOut(255, 105, 'CVC code');
 
-  // 2. Draw Front Card (On top)
+  // 2. Draw Front Card
   LCanvas.Brush.Color := TColor($C57B3B);
   LCanvas.RoundRect(20, 10, 240, 140, 10, 10);
 
-  // BANK text
   LCanvas.Font.Name := 'Segoe UI';
   LCanvas.Font.Size := 9;
   LCanvas.Font.Color := clWhite;
   LCanvas.Font.Style := [fsBold];
   LCanvas.TextOut(190, 20, 'BANK');
 
-  // Card Number
   LCanvas.Font.Name := 'Consolas';
   LCanvas.Font.Size := 11;
   LCanvas.Font.Color := clWhite;
   LCanvas.Font.Style := [fsBold];
   LCanvas.TextOut(32, 58, CardNum);
 
-  // Cardholder Name
   LCanvas.Font.Name := 'Segoe UI';
   LCanvas.Font.Size := 9;
   LCanvas.Font.Color := clWhite;
   LCanvas.Font.Style := [];
   LCanvas.TextOut(35, 92, UpperCase(edtName.Text));
 
-  // Expiry Date
   LCanvas.Font.Size := 8;
   LCanvas.TextOut(35, 110, Expiry);
 
-  // Brand Logo
   DrawBrandLogo(LCanvas, Rect(190, 95, 225, 118), Brand, True);
 end;
 

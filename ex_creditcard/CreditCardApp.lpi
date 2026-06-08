@@ -34,7 +34,6 @@
       <Unit>
         <Filename Value="CreditCardApp.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="CreditCardApp"/>
       </Unit>
       <Unit>
         <Filename Value="uCreditCardForm.pas"/>
