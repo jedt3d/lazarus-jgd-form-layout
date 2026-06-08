@@ -1,93 +1,91 @@
 object SimpleForm: TSimpleForm
   Left = 350
-  Height = 240
+  Height = 200
   Top = 200
-  Width = 400
+  Width = 600
   Caption = 'Simple App'
-  ClientHeight = 240
-  ClientWidth = 400
-  OnCreate = FormCreate
+  ClientHeight = 200
+  ClientWidth = 600
+  DesignTimePPI = 144
   Position = poScreenCenter
+  LCLVersion = '4.6.0.0'
+  OnCreate = FormCreate
   object pnlBottom: TJgdFormLayout
-    Left = 20
-    Height = 35
-    Top = 185
-    Width = 360
+    Left = 30
+    Height = 52
+    Top = 118
+    Width = 540
     Align = alBottom
+    BorderSpacing.Left = 30
+    BorderSpacing.Right = 30
+    BorderSpacing.Bottom = 30
     BevelOuter = bvNone
-    BorderSpacing.Left = 20
-    BorderSpacing.Right = 20
-    BorderSpacing.Bottom = 20
+    ClientHeight = 52
+    ClientWidth = 540
     Color = 16119285
+    ParentBackground = False
     ParentColor = False
+    TabOrder = 1
     ColumnSpecs = 'pref, fill:0:grow, pref, 10px, pref'
     RowSpecs = 'pref'
     ControlConstraints = <    
       item
         Control = btnDontSave
-        Column = 1
-        Row = 1
-        ColumnSpan = 1
-        HAlign = jgdDefault
         VAlign = jgdCenter
       end    
       item
         Control = btnCancel
         Column = 3
-        Row = 1
-        ColumnSpan = 1
-        HAlign = jgdDefault
         VAlign = jgdCenter
       end    
       item
         Control = btnSave
         Column = 5
-        Row = 1
-        ColumnSpan = 1
-        HAlign = jgdDefault
         VAlign = jgdCenter
       end>
-    TabOrder = 1
     object btnDontSave: TButton
       Left = 0
       Height = 35
       Top = 0
-      Width = 90
+      Width = 112
       Caption = 'Don''t Save'
       TabOrder = 0
       OnClick = btnDontSaveClick
     end
     object btnCancel: TButton
-      Left = 190
+      Left = 390
       Height = 35
       Top = 0
-      Width = 80
+      Width = 77
       Caption = 'Cancel'
       TabOrder = 1
       OnClick = btnCancelClick
     end
     object btnSave: TButton
-      Left = 280
+      Left = 477
       Height = 35
       Top = 0
-      Width = 80
+      Width = 63
       Caption = 'Save'
       TabOrder = 2
       OnClick = btnSaveClick
     end
   end
   object pnlMain: TJgdFormLayout
-    Left = 20
-    Height = 135
-    Top = 20
-    Width = 360
+    Left = 30
+    Height = 73
+    Top = 30
+    Width = 540
     Align = alClient
-    BorderSpacing.Top = 20
-    BorderSpacing.Left = 20
-    BorderSpacing.Right = 20
-    BorderSpacing.Bottom = 10
+    BorderSpacing.Left = 30
+    BorderSpacing.Top = 30
+    BorderSpacing.Right = 30
+    BorderSpacing.Bottom = 15
     BevelOuter = bvNone
+    ClientHeight = 73
+    ClientWidth = 540
     Color = clWhite
+    ParentBackground = False
     ParentColor = False
     TabOrder = 0
     ColumnSpecs = 'fill:0:grow, 10px, fill:0:grow'
@@ -95,45 +93,40 @@ object SimpleForm: TSimpleForm
     ControlConstraints = <    
       item
         Control = lblMessage
-        Column = 1
-        Row = 1
-        ColumnSpan = 1
         HAlign = jgdFill
         VAlign = jgdFill
       end    
       item
         Control = lblMessageRight
         Column = 3
-        Row = 1
-        ColumnSpan = 1
         HAlign = jgdFill
         VAlign = jgdFill
       end>
     object lblMessage: TLabel
       Left = 0
-      Height = 135
+      Height = 73
       Top = 0
-      Width = 175
+      Width = 265
       Alignment = taCenter
-      Layout = tlCenter
       AutoSize = False
-      Caption = 'Initial Text'
-      Font.Height = -13
+      Caption = 'Initial Left Text'
+      Font.Height = -20
       Font.Name = 'Segoe UI'
+      Layout = tlCenter
       ParentColor = False
       ParentFont = False
     end
     object lblMessageRight: TLabel
-      Left = 185
-      Height = 135
+      Left = 275
+      Height = 73
       Top = 0
-      Width = 175
+      Width = 265
       Alignment = taCenter
-      Layout = tlCenter
       AutoSize = False
       Caption = 'Initial Right Text'
-      Font.Height = -13
+      Font.Height = -20
       Font.Name = 'Segoe UI'
+      Layout = tlCenter
       ParentColor = False
       ParentFont = False
     end
