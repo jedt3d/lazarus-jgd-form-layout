@@ -1,25 +1,96 @@
 object SimpleForm: TSimpleForm
   Left = 350
-  Height = 200
+  Height = 240
   Top = 200
   Width = 400
   Caption = 'Simple App'
-  ClientHeight = 200
+  ClientHeight = 240
   ClientWidth = 400
   OnCreate = FormCreate
   Position = poScreenCenter
+  object pnlBottom: TJgdFormLayout
+    Left = 20
+    Height = 35
+    Top = 185
+    Width = 360
+    Align = alBottom
+    BevelOuter = bvNone
+    BorderSpacing.Left = 20
+    BorderSpacing.Right = 20
+    BorderSpacing.Bottom = 20
+    Color = 16119285
+    ParentColor = False
+    ColumnSpecs = 'pref, fill:0:grow, pref, 10px, pref'
+    RowSpecs = 'pref'
+    ControlConstraints = <    
+      item
+        Control = btnDontSave
+        Column = 1
+        Row = 1
+        ColumnSpan = 1
+        HAlign = jgdDefault
+        VAlign = jgdCenter
+      end    
+      item
+        Control = btnCancel
+        Column = 3
+        Row = 1
+        ColumnSpan = 1
+        HAlign = jgdDefault
+        VAlign = jgdCenter
+      end    
+      item
+        Control = btnSave
+        Column = 5
+        Row = 1
+        ColumnSpan = 1
+        HAlign = jgdDefault
+        VAlign = jgdCenter
+      end>
+    TabOrder = 1
+    object btnDontSave: TButton
+      Left = 0
+      Height = 35
+      Top = 0
+      Width = 90
+      Caption = 'Don''t Save'
+      TabOrder = 0
+      OnClick = btnDontSaveClick
+    end
+    object btnCancel: TButton
+      Left = 190
+      Height = 35
+      Top = 0
+      Width = 80
+      Caption = 'Cancel'
+      TabOrder = 1
+      OnClick = btnCancelClick
+    end
+    object btnSave: TButton
+      Left = 280
+      Height = 35
+      Top = 0
+      Width = 80
+      Caption = 'Save'
+      TabOrder = 2
+      OnClick = btnSaveClick
+    end
+  end
   object pnlMain: TJgdFormLayout
     Left = 20
-    Height = 160
+    Height = 135
     Top = 20
     Width = 360
     Align = alClient
-    BorderSpacing.Around = 20
+    BorderSpacing.Top = 20
+    BorderSpacing.Left = 20
+    BorderSpacing.Right = 20
+    BorderSpacing.Bottom = 10
     BevelOuter = bvNone
     Color = clWhite
     ParentColor = False
     TabOrder = 0
-    ColumnSpecs = 'fill:pref:grow'
+    ColumnSpecs = 'fill:0:grow, 10px, fill:0:grow'
     RowSpecs = 'fill:pref:grow'
     ControlConstraints = <    
       item
@@ -27,18 +98,40 @@ object SimpleForm: TSimpleForm
         Column = 1
         Row = 1
         ColumnSpan = 1
-        HAlign = jgdCenter
-        VAlign = jgdCenter
+        HAlign = jgdFill
+        VAlign = jgdFill
+      end    
+      item
+        Control = lblMessageRight
+        Column = 3
+        Row = 1
+        ColumnSpan = 1
+        HAlign = jgdFill
+        VAlign = jgdFill
       end>
     object lblMessage: TLabel
-      Left = 20
-      Height = 20
-      Top = 70
-      Width = 320
+      Left = 0
+      Height = 135
+      Top = 0
+      Width = 175
       Alignment = taCenter
-      Anchors = [akTop, akLeft, akRight]
+      Layout = tlCenter
       AutoSize = False
       Caption = 'Initial Text'
+      Font.Height = -13
+      Font.Name = 'Segoe UI'
+      ParentColor = False
+      ParentFont = False
+    end
+    object lblMessageRight: TLabel
+      Left = 185
+      Height = 135
+      Top = 0
+      Width = 175
+      Alignment = taCenter
+      Layout = tlCenter
+      AutoSize = False
+      Caption = 'Initial Right Text'
       Font.Height = -13
       Font.Name = 'Segoe UI'
       ParentColor = False
