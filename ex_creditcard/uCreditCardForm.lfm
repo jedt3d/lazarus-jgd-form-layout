@@ -143,40 +143,59 @@ object CreditCardForm: TCreditCardForm
         Width = 30
         OnPaint = paintBrandLogoPaint
       end
-      object edtCardDetails: TEdit
+      object edtCardNumber: TEdit
         Left = 46
         Height = 20
         Top = 4
-        Width = 292
-        Anchors = [akTop, akLeft, akRight]
+        Width = 175
         BorderStyle = bsNone
         Font.Name = 'Segoe UI'
         Font.Size = 10
         ParentFont = False
         TabOrder = 0
-        Text = '5324 1801 2345 6789 09/30 324'
-        OnChange = edtCardDetailsChange
-        OnKeyDown = edtCardDetailsKeyDown
+        Text = '5324 1801 2345 6789'
+        OnChange = edtCardNumberChange
+        OnKeyDown = edtCardNumberKeyDown
+      end
+      object edtExpiry: TEdit
+        Left = 231
+        Height = 20
+        Top = 4
+        Width = 55
+        BorderStyle = bsNone
+        Font.Name = 'Segoe UI'
+        Font.Size = 10
+        ParentFont = False
+        TabOrder = 1
+        Text = '09/30'
+        OnChange = edtExpiryChange
+        OnKeyDown = edtExpiryKeyDown
+      end
+      object edtCVC: TEdit
+        Left = 296
+        Height = 20
+        Top = 4
+        Width = 42
+        BorderStyle = bsNone
+        Font.Name = 'Segoe UI'
+        Font.Size = 10
+        ParentFont = False
+        TabOrder = 2
+        Text = '324'
+        OnChange = edtCVCChange
       end
     end
-    object btnSubmit: TPanel
+    object btnSubmit: TButton
       Left = 20
       Height = 35
       Top = 284
       Width = 120
-      BevelOuter = bvNone
-      BorderStyle = bsSingle
       Caption = 'Add Card'
-      Color = 14737632
-      Cursor = crHandPoint
       Font.Name = 'Segoe UI'
       Font.Size = 10
-      ParentBackground = False
-      ParentColor = False
+      ParentFont = False
       TabOrder = 2
       OnClick = btnSubmitClick
-      OnMouseEnter = btnSubmitMouseEnter
-      OnMouseLeave = btnSubmitMouseLeave
     end
   end
 end

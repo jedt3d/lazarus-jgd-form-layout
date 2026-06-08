@@ -18,8 +18,10 @@ type
     edtName: TEdit;
     pnlCardInput: TPanel;
     paintBrandLogo: TPaintBox;
-    edtCardDetails: TEdit;
-    btnSubmit: TPanel;
+    edtCardNumber: TEdit;
+    edtExpiry: TEdit;
+    edtCVC: TEdit;
+    btnSubmit: TButton;
 
     procedure FormCreate(Sender: TObject);
     procedure FormPaint(Sender: TObject);
@@ -28,12 +30,13 @@ type
     procedure lblCloseMouseLeave(Sender: TObject);
     procedure paintCardsPaint(Sender: TObject);
     procedure paintBrandLogoPaint(Sender: TObject);
-    procedure edtCardDetailsChange(Sender: TObject);
-    procedure edtCardDetailsKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure edtCardNumberChange(Sender: TObject);
+    procedure edtCardNumberKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure edtExpiryChange(Sender: TObject);
+    procedure edtExpiryKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure edtCVCChange(Sender: TObject);
     procedure edtNameChange(Sender: TObject);
     procedure btnSubmitClick(Sender: TObject);
-    procedure btnSubmitMouseEnter(Sender: TObject);
-    procedure btnSubmitMouseLeave(Sender: TObject);
     
     // Draggable window events
     procedure pnlTitleBarMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
@@ -92,14 +95,15 @@ begin
   FDragging := False;
   Self.DoubleBuffered := True;
   
-  // Set default placeholder/hint values matching the mockup
+  // Set default values matching mockup
   edtName.Text := 'LUKE WALKER';
-  edtCardDetails.Text := '5324 1801 2345 6789 09/30 324';
+  edtCardNumber.Text := '5324 1801 2345 6789';
+  edtExpiry.Text := '09/30';
+  edtCVC.Text := '324';
 end;
 
 procedure TCreditCardForm.FormPaint(Sender: TObject);
 begin
-  // Draw the custom 1px steel blue border around the borderless window
   Canvas.Pen.Color := TColor($A07040); // Steel blue border in BGR
   Canvas.Pen.Width := 1;
   Canvas.Brush.Style := bsClear;
@@ -127,7 +131,7 @@ var
   I: Integer;
   Digits: string;
 begin
-  S := edtCardDetails.Text;
+  S := edtCardNumber.Text;
   Digits := '';
   for I := 1 to Length(S) do
     if S[I] in ['0'..'9'] then
@@ -145,39 +149,29 @@ end;
 
 procedure TCreditCardForm.GetCardParts(out ANumber, AExpiry, ACvc: string);
 var
-  S: string;
-  Digits: string;
+  NumDigits: string;
   I: Integer;
 begin
-  S := edtCardDetails.Text;
-  Digits := '';
-  for I := 1 to Length(S) do
-    if S[I] in ['0'..'9'] then
-      Digits := Digits + S[I];
-
-  // Card Number (up to 16 digits)
-  ANumber := Copy(Digits, 1, 16);
+  // Standardize Card Number format
+  NumDigits := '';
+  for I := 1 to Length(edtCardNumber.Text) do
+    if edtCardNumber.Text[I] in ['0'..'9'] then
+      NumDigits := NumDigits + edtCardNumber.Text[I];
+      
+  ANumber := NumDigits;
   while Length(ANumber) < 16 do
     ANumber := ANumber + 'x';
     
-  // Format Card Number with spaces
   ANumber := Copy(ANumber, 1, 4) + ' ' + Copy(ANumber, 5, 4) + ' ' + Copy(ANumber, 9, 4) + ' ' + Copy(ANumber, 13, 4);
 
-  // Expiry (digits 17 to 20)
-  AExpiry := Copy(Digits, 17, 4);
-  if Length(AExpiry) > 0 then
-  begin
-    if Length(AExpiry) < 4 then
-      AExpiry := AExpiry + StringOfChar('x', 4 - Length(AExpiry));
-    AExpiry := Copy(AExpiry, 1, 2) + '/' + Copy(AExpiry, 3, 2);
-  end
-  else
+  // Expiry
+  AExpiry := edtExpiry.Text;
+  if AExpiry = '' then
     AExpiry := 'MM/YY';
 
-  // Cvc (digits 21+)
-  if Length(Digits) >= 21 then
-    ACvc := Copy(Digits, 21, 4)
-  else
+  // Cvc
+  ACvc := edtCVC.Text;
+  if ACvc = '' then
     ACvc := 'XXX';
 end;
 
@@ -190,14 +184,13 @@ begin
   
   if ABrand = 'VISA' then
   begin
-    // Draw Visa text
     ACanvas.Font.Name := 'Segoe UI';
     ACanvas.Font.Style := [fsBold, fsItalic];
     ACanvas.Font.Size := 9;
     if AOnCard then
       ACanvas.Font.Color := clWhite
     else
-      ACanvas.Font.Color := TColor($8A3B1A); // Dark blue in BGR
+      ACanvas.Font.Color := TColor($8A3B1A); // Dark blue
       
     ACanvas.TextOut(ARect.Left + (ARect.Width - ACanvas.TextWidth('VISA')) div 2, 
                     ARect.Top + (ARect.Height - ACanvas.TextHeight('VISA')) div 2, 
@@ -205,7 +198,6 @@ begin
   end
   else if ABrand = 'MASTERCARD' then
   begin
-    // Two overlapping circles
     Radius := (ARect.Height * 7) div 20;
     CY := ARect.Top + ARect.Height div 2;
     
@@ -221,14 +213,12 @@ begin
   end
   else
   begin
-    // Generic Card Outline
     ACanvas.Brush.Color := TColor($E0E0E0);
     if AOnCard then
       ACanvas.Brush.Color := TColor($90A0B0);
       
     ACanvas.RoundRect(ARect.Left + 2, ARect.Top + 2, ARect.Right - 2, ARect.Bottom - 2, 4, 4);
     
-    // Draw a small decorative stripe/chip inside generic icon
     ACanvas.Brush.Color := TColor($B0B0B0);
     if AOnCard then
       ACanvas.Brush.Color := TColor($A8B8C8);
@@ -254,8 +244,7 @@ begin
   LCanvas.Brush.Style := bsSolid;
 
   // 1. Draw Back Card (Behind)
-  // Position: X=110, Y=30, W=220, H=130
-  LCanvas.Brush.Color := TColor($D29864); // Medium steel blue BGR
+  LCanvas.Brush.Color := TColor($D29864);
   LCanvas.RoundRect(110, 30, 330, 160, 10, 10);
 
   // Black magnetic stripe
@@ -279,8 +268,7 @@ begin
   LCanvas.TextOut(255, 105, 'CVC code');
 
   // 2. Draw Front Card (On top)
-  // Position: X=20, Y=10, W=220, H=130
-  LCanvas.Brush.Color := TColor($C57B3B); // Nice blue BGR
+  LCanvas.Brush.Color := TColor($C57B3B);
   LCanvas.RoundRect(20, 10, 240, 140, 10, 10);
 
   // BANK text
@@ -290,7 +278,7 @@ begin
   LCanvas.Font.Style := [fsBold];
   LCanvas.TextOut(190, 20, 'BANK');
 
-  // Card Number (Consolas / Courier for standard card feel)
+  // Card Number
   LCanvas.Font.Name := 'Consolas';
   LCanvas.Font.Size := 11;
   LCanvas.Font.Color := clWhite;
@@ -308,7 +296,7 @@ begin
   LCanvas.Font.Size := 8;
   LCanvas.TextOut(35, 110, Expiry);
 
-  // Brand Logo on front card
+  // Brand Logo
   DrawBrandLogo(LCanvas, Rect(190, 95, 225, 118), Brand, True);
 end;
 
@@ -317,70 +305,40 @@ begin
   DrawBrandLogo(paintBrandLogo.Canvas, paintBrandLogo.ClientRect, GetCardBrand, False);
 end;
 
-procedure TCreditCardForm.edtCardDetailsChange(Sender: TObject);
+procedure TCreditCardForm.edtCardNumberChange(Sender: TObject);
 var
   S, Digits, Formatted: string;
   I, DigitCount, OrigSelStart, TargetSelStart, DigitIndexAtCursor: Integer;
 begin
-  S := edtCardDetails.Text;
-  OrigSelStart := edtCardDetails.SelStart;
+  S := edtCardNumber.Text;
+  OrigSelStart := edtCardNumber.SelStart;
   
-  // Count digits before cursor
   DigitIndexAtCursor := 0;
   for I := 1 to OrigSelStart do
     if S[I] in ['0'..'9'] then
       Inc(DigitIndexAtCursor);
-  
-  // Extract all digits
+      
   Digits := '';
   for I := 1 to Length(S) do
     if S[I] in ['0'..'9'] then
       Digits := Digits + S[I];
       
-  // Limit digits to max 24 (16 card + 4 expiry + 4 CVC)
-  if Length(Digits) > 24 then
-    Digits := Copy(Digits, 1, 24);
+  if Length(Digits) > 16 then
+    Digits := Copy(Digits, 1, 16);
     
-  // Format digits
   Formatted := '';
   DigitCount := Length(Digits);
   for I := 1 to DigitCount do
   begin
     Formatted := Formatted + Digits[I];
-    
-    // Add separators
-    if I = 4 then
-    begin
-      if DigitCount > 4 then Formatted := Formatted + ' ';
-    end
-    else if I = 8 then
-    begin
-      if DigitCount > 8 then Formatted := Formatted + ' ';
-    end
-    else if I = 12 then
-    begin
-      if DigitCount > 12 then Formatted := Formatted + ' ';
-    end
-    else if I = 16 then
-    begin
-      if DigitCount > 16 then Formatted := Formatted + ' ';
-    end
-    else if I = 18 then
-    begin
-      if DigitCount > 18 then Formatted := Formatted + '/';
-    end
-    else if I = 20 then
-    begin
-      if DigitCount > 20 then Formatted := Formatted + ' ';
-    end;
+    if (I mod 4 = 0) and (I < 16) and (I < DigitCount) then
+      Formatted := Formatted + ' ';
   end;
   
-  // Update text if changed to avoid recursion
-  if edtCardDetails.Text <> Formatted then
+  if edtCardNumber.Text <> Formatted then
   begin
-    edtCardDetails.Text := Formatted;
+    edtCardNumber.Text := Formatted;
     
-    // Map digit index back to cursor position in formatted string
     TargetSelStart := 0;
     I := 0;
     while (I < Length(Formatted)) and (DigitIndexAtCursor > 0) do
@@ -391,39 +349,131 @@ begin
         Dec(DigitIndexAtCursor);
     end;
     
-    // Adjust for trailing spaces/slashes if user typed right before it
-    if (TargetSelStart < Length(Formatted)) and not (Formatted[TargetSelStart + 1] in ['0'..'9']) then
+    if (TargetSelStart < Length(Formatted)) and (Formatted[TargetSelStart + 1] = ' ') then
       Inc(TargetSelStart);
       
-    edtCardDetails.SelStart := TargetSelStart;
+    edtCardNumber.SelStart := TargetSelStart;
   end;
-
-  // Redraw card preview & brand logo
+  
   paintCards.Invalidate;
   paintBrandLogo.Invalidate;
 end;
 
-procedure TCreditCardForm.edtCardDetailsKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+procedure TCreditCardForm.edtCardNumberKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 var
   SelStartVal: Integer;
   S: string;
 begin
-  if Key = 8 then // Backspace
+  if Key = 8 then
   begin
-    SelStartVal := edtCardDetails.SelStart;
-    S := edtCardDetails.Text;
+    SelStartVal := edtCardNumber.SelStart;
+    S := edtCardNumber.Text;
     if (SelStartVal > 0) and (SelStartVal <= Length(S)) then
     begin
-      // If the character to the left of the cursor is a space or slash, delete the digit before it too
-      if (S[SelStartVal] in [' ', '/']) then
+      if S[SelStartVal] = ' ' then
       begin
         Delete(S, SelStartVal - 1, 2);
-        edtCardDetails.Text := S;
-        edtCardDetails.SelStart := SelStartVal - 2;
-        Key := 0; // Handled
+        edtCardNumber.Text := S;
+        edtCardNumber.SelStart := SelStartVal - 2;
+        Key := 0;
       end;
     end;
   end;
+end;
+
+procedure TCreditCardForm.edtExpiryChange(Sender: TObject);
+var
+  S, Digits, Formatted: string;
+  I, DigitCount, OrigSelStart, TargetSelStart, DigitIndexAtCursor: Integer;
+begin
+  S := edtExpiry.Text;
+  OrigSelStart := edtExpiry.SelStart;
+  
+  DigitIndexAtCursor := 0;
+  for I := 1 to OrigSelStart do
+    if S[I] in ['0'..'9'] then
+      Inc(DigitIndexAtCursor);
+      
+  Digits := '';
+  for I := 1 to Length(S) do
+    if S[I] in ['0'..'9'] then
+      Digits := Digits + S[I];
+      
+  if Length(Digits) > 4 then
+    Digits := Copy(Digits, 1, 4);
+    
+  Formatted := '';
+  DigitCount := Length(Digits);
+  for I := 1 to DigitCount do
+  begin
+    Formatted := Formatted + Digits[I];
+    if (I = 2) and (DigitCount > 2) then
+      Formatted := Formatted + '/';
+  end;
+  
+  if edtExpiry.Text <> Formatted then
+  begin
+    edtExpiry.Text := Formatted;
+    
+    TargetSelStart := 0;
+    I := 0;
+    while (I < Length(Formatted)) and (DigitIndexAtCursor > 0) do
+    begin
+      Inc(I);
+      Inc(TargetSelStart);
+      if Formatted[I] in ['0'..'9'] then
+        Dec(DigitIndexAtCursor);
+    end;
+    
+    if (TargetSelStart < Length(Formatted)) and (Formatted[TargetSelStart + 1] = '/') then
+      Inc(TargetSelStart);
+      
+    edtExpiry.SelStart := TargetSelStart;
+  end;
+  
+  paintCards.Invalidate;
+end;
+
+procedure TCreditCardForm.edtExpiryKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+var
+  SelStartVal: Integer;
+  S: string;
+begin
+  if Key = 8 then
+  begin
+    SelStartVal := edtExpiry.SelStart;
+    S := edtExpiry.Text;
+    if (SelStartVal > 0) and (SelStartVal <= Length(S)) then
+    begin
+      if S[SelStartVal] = '/' then
+      begin
+        Delete(S, SelStartVal - 1, 2);
+        edtExpiry.Text := S;
+        edtExpiry.SelStart := SelStartVal - 2;
+        Key := 0;
+      end;
+    end;
+  end;
+end;
+
+procedure TCreditCardForm.edtCVCChange(Sender: TObject);
+var
+  S, Digits: string;
+  I: Integer;
+begin
+  S := edtCVC.Text;
+  Digits := '';
+  for I := 1 to Length(S) do
+    if S[I] in ['0'..'9'] then
+      Digits := Digits + S[I];
+      
+  if Length(Digits) > 4 then
+    Digits := Copy(Digits, 1, 4);
+    
+  if edtCVC.Text <> Digits then
+    edtCVC.Text := Digits;
+    
+  paintCards.Invalidate;
 end;
 
 procedure TCreditCardForm.edtNameChange(Sender: TObject);
@@ -436,13 +486,13 @@ var
   S, Digits, CardNum: string;
   I: Integer;
 begin
-  S := edtCardDetails.Text;
+  S := edtCardNumber.Text;
   Digits := '';
   for I := 1 to Length(S) do
     if S[I] in ['0'..'9'] then
       Digits := Digits + S[I];
 
-  CardNum := Copy(Digits, 1, 16);
+  CardNum := Digits;
   
   if Length(CardNum) < 13 then
   begin
@@ -456,16 +506,6 @@ begin
   begin
     ShowMessage('Error: Invalid Credit Card number! (Luhn check failed)');
   end;
-end;
-
-procedure TCreditCardForm.btnSubmitMouseEnter(Sender: TObject);
-begin
-  btnSubmit.Color := TColor($EAEAEA);
-end;
-
-procedure TCreditCardForm.btnSubmitMouseLeave(Sender: TObject);
-begin
-  btnSubmit.Color := TColor($E0E0E0);
 end;
 
 procedure TCreditCardForm.pnlTitleBarMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
